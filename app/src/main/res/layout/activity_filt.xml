@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
+
+    <CheckBox
+        android:id="@+id/checkBoxPark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Parking"
+        android:onClick="onCheckboxClicked"/>
+
+    <CheckBox
+        android:id="@+id/checkBoxNoPark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="No Parking"
+        android:onClick="onCheckboxClicked"/>
+
+    <EditText
+        android:id="@+id/textMaxPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Maximum Price"/>
+
+    <Button
+        android:id="@+id/btnShow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:text="Show" />
+
+</LinearLayout>
