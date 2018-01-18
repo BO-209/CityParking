@@ -9,10 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-/**
- * Created by dns on 16.01.2018.
- */
-
 public class AddActivity extends Activity implements View.OnClickListener {
 
     private CheckBox parkChoiceBox;
@@ -35,20 +31,17 @@ public class AddActivity extends Activity implements View.OnClickListener {
     }
 
     public void onCheckboxClicked(View view) {
-        // Получаем, отмечен ли данный флажок
+
         boolean checked = ((CheckBox) view).isChecked();
 
-        // Смотрим, какой именно из флажков отмечен
         switch(view.getId()) {
             case R.id.checkBoxNewPark:
                 if (checked){
-                    //maxPrice.setEnabled(true);
                     noParkChoiceBox.setChecked(false);
                 }
                 break;
             case R.id.checkBoxNewNoPark:
                 if (checked)
-                    //maxPrice.setEnabled(false);
                     parkChoiceBox.setChecked(false);
                 break;
         }
@@ -60,7 +53,11 @@ public class AddActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         Log.d("my log", "get add activity");
         Intent intent = new Intent();
-        intent.putExtra("available", parkChoiceBox.isChecked());
+        int av;
+        if (parkChoiceBox.isChecked()) {
+            av = 1;
+        } else av = 0;
+        intent.putExtra("available", av);
         intent.putExtra("price", priceTxt.getText().toString());
         intent.putExtra("description", descriptionTxt.getText().toString());
         setResult(RESULT_OK, intent);

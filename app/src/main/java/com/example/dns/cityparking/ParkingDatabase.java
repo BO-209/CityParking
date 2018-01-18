@@ -15,15 +15,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-/**
- * Created by dns on 07.01.2018.
- */
-
 public class ParkingDatabase extends SQLiteOpenHelper {
-    private static String DB_PATH; // путь к базе данных="/data/data/com.example.dns.cityparking/databases/"
+    private static String DB_PATH;
     private static String DB_NAME = "parking.db"; //имя БД
     private static final int VERSION = 1; // версия базы данных
-  //  private SQLiteDatabase myDataBase;
     private Context context;
 
     public ParkingDatabase(Context context) {
@@ -68,28 +63,16 @@ public class ParkingDatabase extends SQLiteOpenHelper {
         return checkDB != null ? true : false;
     }
 
-    /**
-     * Копирует базу из папки assets заместо созданной локальной БД
-     * Выполняется путем копирования потока байтов.
-     * */
+
     private void copyDataBase() throws IOException{
-        //Открываем локальную БД как входящий поток
         InputStream myInput = context.getAssets().open(DB_NAME);
-
-        //Путь ко вновь созданной БД
         String outFileName = DB_PATH + DB_NAME;
-
-        //Открываем пустую базу данных как исходящий поток
         OutputStream myOutput = new FileOutputStream(outFileName);
-
-        //перемещаем байты из входящего файла в исходящий
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myInput.read(buffer))>0){
             myOutput.write(buffer, 0, length);
         }
-
-        //закрываем потоки
         myOutput.flush();
         myOutput.close();
         myInput.close();

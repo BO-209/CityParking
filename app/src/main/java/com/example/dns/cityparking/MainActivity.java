@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -48,8 +49,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private ArrayList<ParkingArea> parkingAreas;
     private DatabaseController DBContr;
-    //private ParkingArea currentParkingArea;
-    //private ArrayList<LatLng> points = new ArrayList<LatLng>();
     ImageButton btnFilt;
     ImageButton btnMark;
     ImageButton btnAdd;
@@ -65,7 +64,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_main);
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        //map.setBuiltInZoomControls(true);
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         btnFilt = (ImageButton) findViewById(R.id.buttonFilt);
         btnAdd = (ImageButton) findViewById(R.id.buttonAdd);
@@ -88,7 +86,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         updateLocationUI();
         getLocation();
         Log.d("my log", "Map start");
-        parkingAreas = DBContr.getAll();
+       // parkingAreas = DBContr.getAll();
+        new GetAllTask().execute();
         showParkingAreas();
         map.setOnMapClickListener(this);
         map.setOnPolylineClickListener(this);
@@ -170,6 +169,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
     }
 
+    public class GetAllTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPreExecute() { }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            parkingAreas = DBContr.getAll();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+        }
+    }
+
+
+
+
 
     private void showParkingAreas(){
         int colorParking;
@@ -248,8 +266,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMarkerDrag(Marker marker){}
 
-
-
     @Override
     public void onMapClick(LatLng point) {
         if(flagAdd){
@@ -270,6 +286,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     //  if (data != null) {
                     available = data.getIntExtra("available", 1);
                     price = Integer.parseInt(data.getStringExtra("price"));
+                    //new GetFiltTask(available, price).execute();
                     parkingAreas = DBContr.dbFilter(available, price);
                     Log.d("my log", "get filt db");
                     map.clear();
@@ -277,7 +294,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     break;
                 case REQUEST_CODE_ADD:
                     Log.d("my log", "get insert db");
-                    available = data.getIntExtra("available", 1);
+                    available = data.getIntExtra("available", 0);
                     price = Integer.parseInt(data.getStringExtra("price"));
                     description = data.getStringExtra("description");
                     ParkingArea newParking = new ParkingArea(available, newPoints, price, description);

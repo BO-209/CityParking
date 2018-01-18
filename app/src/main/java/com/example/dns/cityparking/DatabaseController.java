@@ -12,14 +12,9 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * Created by dns on 10.01.2018.
- */
 
 public class DatabaseController {
     private final String TABLE = "parkingarea"; // название таблицы в бд
-    // названия столбцов
-   // private final String COLUMN_ID = "_id";
     private final String COLUMN_AVAILAB = "availability";
     private final String COLUMN_COORDINATES = "coordinates";
     private final String COLUMN_PRICE = "price";
@@ -37,12 +32,6 @@ public class DatabaseController {
     }
 
     public void Insert(ParkingArea item) {
-       /*  try {
-            db.createDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        Log.d("my log", "insert db start");
         parkDB = db.openDataBase();
         ContentValues cv=new ContentValues();
         cv.put(COLUMN_AVAILAB, item.getAvailable());
@@ -112,16 +101,10 @@ public class DatabaseController {
     //метод для поиска по параметрам (кроме радиуса)double radius,
     public ArrayList<ParkingArea> dbFilter(int a,  int p) {
         ArrayList<ParkingArea> parks = new ArrayList<ParkingArea>();
-      /*  try {
-            db.createDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-       // String[] projection = {this.COLUMN_AVAILAB, this.COLUMN_COORDINATES,
-       //                        this.COLUMN_PRICE,this.COLUMN_COMMENT};
-        Log.d("my log", "filt db start");
-        //переделать БД и все связанное для available Text (String)????
-        String selection =  this.COLUMN_AVAILAB + "=? AND " + this.COLUMN_PRICE + "<=?"; //this.COLUMN_PRICE
+
+      //  Log.d("my log", "filt db start");
+
+        String selection =  this.COLUMN_AVAILAB + "=? AND " + this.COLUMN_PRICE + "<=?";
         String[] selectionArgs = {Integer.toString(a), Integer.toString(p)};
 
         parkDB = db.openDataBase();
@@ -147,13 +130,5 @@ public class DatabaseController {
         parkDB.close();
         return parks;
     }
-/*
-    //функция перевода радиуса в значение широты и долготы
-    private LatLng radiusToLatLng(double r){
-        LatLng region;
-
-        return region;
-    }
-*/
 
 }

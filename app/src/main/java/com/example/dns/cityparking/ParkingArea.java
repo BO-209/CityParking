@@ -12,9 +12,6 @@ import java.util.ArrayList;
 
 import static com.example.dns.cityparking.R.id.map;
 
-/**
- * Created by dns on 02.01.2018.
- */
 
 public class ParkingArea {
     private int pointsNumber;

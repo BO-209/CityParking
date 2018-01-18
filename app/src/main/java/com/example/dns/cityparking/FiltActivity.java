@@ -8,10 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-/**
- * Created by dns on 13.01.2018.
- */
-
 public class FiltActivity extends Activity implements View.OnClickListener {
 
     private CheckBox parkCheckBox;
@@ -58,9 +54,6 @@ public class FiltActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-
-       // intent.putExtra("parkShow", parkCheckBox.isChecked());
-       // intent.putExtra("noParkShow", noParkCheckBox.isChecked());
 
         if (parkCheckBox.isChecked()){
             String price = maxPrice.getText().toString();
